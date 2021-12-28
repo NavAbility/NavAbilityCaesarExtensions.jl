@@ -1,8 +1,8 @@
 module NavAbilityDFG
 
 # Primary Struct Extensions
-include("./entities/NavAbilityDFG.jl")
-export NavAbilityDFG
+include("./entities/NVADFG.jl")
+export NVADFG
 
 # Variable Extensions
 import DistributedFactorGraphs:addVariable! # Import required to extend
