@@ -1,0 +1,9 @@
+name = "NavAbilityDFG"
+uuid = "c907f2e4-cacd-4b19-9293-a200c6b4e604"
+desc = "DFG provided by NavAbility to use their platform within the Caesar ecosystem."
+authors = ["NavAbility <info@navability.io>"]
+version = "0.1.0"
+
+[deps]
+DistributedFactorGraphs = "b5cc3c7e-6572-11e9-2517-99fb8daf2f04"
+NavAbilitySDK = "f3e6a059-199c-4ada-8143-fcefb97e6165"
