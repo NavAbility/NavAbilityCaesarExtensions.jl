@@ -1,4 +1,4 @@
-module NavAbility
+module NavAbilityDFG
 
 # Primary Struct Extensions
 include("./entities/NavAbilityDFG.jl")
