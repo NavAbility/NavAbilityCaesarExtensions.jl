@@ -1,6 +1,6 @@
-name = "NavAbilityDFG"
+name = "NavAbilityCaesarExtensions"
 uuid = "c907f2e4-cacd-4b19-9293-a200c6b4e604"
-desc = "DFG provided by NavAbility to use their platform within the Caesar ecosystem."
+desc = "Extensions provided by NavAbility simplify use of their platform within the Caesar ecosystem."
 authors = ["NavAbility <info@navability.io>"]
 version = "0.1.0"
 

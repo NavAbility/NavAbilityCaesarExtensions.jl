@@ -1,5 +1,5 @@
 using NavAbilitySDK
 
-function addVariable!(dfg::NVADFG, variable::AbstractDFGVariable)::String
+function addVariable!(dfg::NavAbilityDFG, variable::AbstractDFGVariable)::String
     
 end
