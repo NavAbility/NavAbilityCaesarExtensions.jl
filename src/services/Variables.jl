@@ -1,22 +1,19 @@
 using NavAbilitySDK
 using Caesar
+using JSON
 
-function convert(dfg::NavAbilityDFG, variable::AbstractDFGVariable)::NavAbilitySDK.Variable
-  return packVariable(dfg, variable)
-end
-
-function addVariable!(dfg::NavAbilityDFG, variable::AbstractDFGVariable; maxWaitSeconds::Int = 150)::String
-    context = Client(dfg.userId,dfg.robotId,dfg.sessionId)
-    sdkVariable = convert(dfg, variable)
-    requestId = addPackedVariable(dfg.navabilityClient, context, sdkVariable)
-    for _ in 1:maxWaitSeconds
-      savedVariable = NavAbilitySDK.getVariable(dfg.navabilityClient, context, variable.label)
-      if !(savedVariable === nothing)
-        break
-      end
-      sleep(1)
+function addVariable!(dfg::NavAbilityDFG, label::Symbol, varType::Union{Type{T}, T}; maxWaitSeconds::Int=150) where T<:InferenceVariable
+  context = Client(dfg.userId,dfg.robotId,dfg.sessionId)
+  variable = Variable(string(label), string(varType))
+  requestId = NavAbilitySDK.addVariable(dfg.navabilityClient, context, variable)
+  for _ in 1:maxWaitSeconds
+    savedVariable = NavAbilitySDK.getVariable(dfg.navabilityClient, context, string(label))
+    if !(savedVariable === nothing)
+      break
     end
-    return requestId
+    sleep(1)
+  end
+  return requestId
 end
 
 function getVariable(dfg::NavAbilityDFG, label::Union{Symbol, String})

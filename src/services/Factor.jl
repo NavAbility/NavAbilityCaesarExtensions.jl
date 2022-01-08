@@ -1,15 +1,12 @@
 using NavAbilitySDK
+using JSON
 
-function convert(dfg::NavAbilityDFG, factor::AbstractDFGFActor)::NavAbilitySDK.Factor
-  packFactor(dfg, factor)
-end
-
-function addFactor!(dfg::NavAbilityDFG, factor::AbstractDFGFactor; await::Int = 150)::String
+function addFactor!(dfg::NavAbilityDFG, variables::Any, factor::Any; await::Int = 150)::String
     context = Client(dfg.userId,dfg.robotId,dfg.sessionId)
-    sdkFactor = convert(dfg, factor)
-    requestId = addPackedFactor(dfg.navabilityClient, context, sdkFactor)
+    sdkFactor = packFactor(dfg, factor)
+    requestId = NavAbilitySDK.addPackedFactor(dfg.navabilityClient, context, json(sdkFactor))
     for _ in 1:await
-      savedFactor = getFactor(dfg.navabilityClient, context, factor.label)
+      savedFactor = NavAbilitySDK.getFactor(dfg.navabilityClient, context, factor.label)
       if !(savedFactor === nothing)
         break
       end
