@@ -1,16 +1,17 @@
 using NavAbilitySDK
+using Caesar
 
-function convert(variable::AbstractDFGVariable)::NavAbilitySDK.Variable
-  throw("Not implemented yet.")
+function convert(dfg::NavAbilityDFG, variable::AbstractDFGVariable)::NavAbilitySDK.Variable
+  return packVariable(dfg, variable)
 end
 
-function addVariable!(dfg::NavAbilityDFG, variable::AbstractDFGVariable; await::Int = 150)::String
+function addVariable!(dfg::NavAbilityDFG, variable::AbstractDFGVariable; maxWaitSeconds::Int = 150)::String
     context = Client(dfg.userId,dfg.robotId,dfg.sessionId)
-    sdkVariable = convert(variable)
-    requestId = addVariable(dfg.navabilityClient, context, sdkVariable)
-    for _ in 1:await
-      savedVariable = getVariable(dfg.navabilityClient, context, sdkVariable.label)
-      if !(savedVariable == nothing)
+    sdkVariable = convert(dfg, variable)
+    requestId = addPackedVariable(dfg.navabilityClient, context, sdkVariable)
+    for _ in 1:maxWaitSeconds
+      savedVariable = getVariable(dfg.navabilityClient, context, variable.label)
+      if !(savedVariable === nothing)
         break
       end
       sleep(1)
