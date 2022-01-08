@@ -21,7 +21,12 @@ function getVariable(dfg::NavAbilityDFG, label::Union{Symbol, String})
   return NavAbilitySDK.getVariable(dfg.navAbilityClient, context, string(label))
 end
 
-function ls(dfg::NavAbilityDFG)
+function getVariables(dfg::NavAbilityDFG, regexFilter::Union{Nothing, Regex}=nothing; tags::Vector{Symbol}=Symbol[], solvable::Int=0)
   context = Client(dfg.userId,dfg.robotId,dfg.sessionId)
-  return NavAbilitySDK.ls(dfg.navAbilityClient, context)
+  response = NavAbilitySDK.getVariables(dfg.navabilityClient, context)
+  dfgVariables = map(v -> unpackVariable(nothingDFG, v), response)
+  # TODO: Implement regexFilter
+  # TODO: Implement tags
+  # TODO: Implement solver filter
+  return dfgVariables
 end
