@@ -7,4 +7,7 @@ version = "0.1.0"
 [deps]
 Caesar = "62eebf14-49bc-5f46-9df9-f7b7ef379406"
 DistributedFactorGraphs = "b5cc3c7e-6572-11e9-2517-99fb8daf2f04"
+IncrementalInference = "904591bb-b899-562f-9e6f-b8df64c7d480"
+JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 NavAbilitySDK = "f3e6a059-199c-4ada-8143-fcefb97e6165"
+RoME = "91fb55c2-4c03-5a59-ba21-f4ea956187b8"
