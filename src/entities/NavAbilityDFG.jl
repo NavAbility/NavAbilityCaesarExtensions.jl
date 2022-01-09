@@ -12,7 +12,9 @@ end
 
 function NavAbilityDFG(apiUrl::String, userId::String, robotId::String, sessionId::String)
     navabilityClient = NavAbilityHttpsClient(apiUrl)
-    return NavAbilityDFG(navabilityClient,SolverParams(),userId,robotId,sessionId)
+    solverParams = SolverParams()
+    solverParams.graphinit = false
+    return NavAbilityDFG(navabilityClient,solverParams,userId,robotId,sessionId)
 end
 
 function Base.show(io::IO, dfg::NavAbilityDFG)
