@@ -7,9 +7,8 @@ export NavAbilityDFG
 # Variable Extensions
 import DistributedFactorGraphs: addVariable!, getVariable, getVariables # Import required to extend
 import DistributedFactorGraphs: addFactor!, getFactor, getFactors # Import required to extend
-import IncrementalInference: addFactor!
 export addVariable!, getVariable, getVariables
-export addFactor!, getFactor, getFactors
+export addFactor!, getFactor, getFactors, packFactor
 export solveGraph!
 include("./services/Variables.jl")
 include("./services/Factor.jl")

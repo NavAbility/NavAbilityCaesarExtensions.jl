@@ -1,17 +1,19 @@
 using NavAbilitySDK
+using DistributedFactorGraphs
 using JSON
-using RoME
-using Caesar
 
-function addFactor!(dfg::NavAbilityDFG, variables::AbstractVector{Symbol}, factor::AbstractDFGFactor; await::Int = 150)
+function gqlToDfg(factor)
+  return factor
+end
+
+function addFactor!(dfg::CloudDFG, factor::AbstractDFGFactor; await::Int = 150)
   context = Client(dfg.userId,dfg.robotId,dfg.sessionId)
-  @info "prepack"
   sdkFactor = packFactor(dfg, factor)
-  @info "postpack"
-  requestId = NavAbilitySDK.addPackedFactor(dfg.navabilityClient, context, json(sdkFactor))
+  requestId = addPackedFactor(dfg.navabilityClient, context, json(sdkFactor))
   for _ in 1:await
-    savedFactor = NavAbilitySDK.getFactor(dfg.navabilityClient, context, factor.label)
+    savedFactor = getFactor(dfg, getLabel(factor))
     if !(savedFactor === nothing)
+      @info savedFactor
       break
     end
     sleep(1)
@@ -19,12 +21,21 @@ function addFactor!(dfg::NavAbilityDFG, variables::AbstractVector{Symbol}, facto
   return requestId
 end
 
+function getFactor(dfg::NavAbilityDFG, label::Union{Symbol, String})
+  context = Client(dfg.userId,dfg.robotId,dfg.sessionId)
+  factor = getFactor(dfg.navabilityClient, context, string(label))
+  @info factor
+  return factor
+end
+
 function getFactors(dfg::NavAbilityDFG, regexFilter::Union{Nothing, Regex}=nothing; tags::Vector{Symbol}=Symbol[], solvable::Int=0)
   context = Client(dfg.userId,dfg.robotId,dfg.sessionId)
-  response = NavAbilitySDK.getFactors(dfg.navabilityClient, context)
-  dfgVariables = map(v -> unpackFactor(dfg, v), response)
+  gqlFactors = getFactors(dfg.navabilityClient, context)
+  packedDfgFactors = map(v -> gqlToDfg(v),gqlFactors)
+  dfgFactors = map(f -> unpackFactor(dfg, f), packedDfgFactors)
   # TODO: Implement regexFilter
   # TODO: Implement tags
   # TODO: Implement solver filter
-  return dfgVariables
+  @info dfgFactors
+  return dfgFactors
 end

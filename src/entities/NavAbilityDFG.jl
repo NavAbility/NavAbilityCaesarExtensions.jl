@@ -1,16 +1,18 @@
 using NavAbilitySDK
 using DistributedFactorGraphs
+using IncrementalInference
 
 mutable struct NavAbilityDFG{T <: AbstractParams} <: AbstractDFG{T}
     navabilityClient::NavAbilityClient
+    solverParams::T
     userId::String
     robotId::String
     sessionId::String
 end
 
-function NavAbilityDFG(apiUrl::String, userId::String, robotId::String, sessionId::String)::NavAbilityDFG
+function NavAbilityDFG(apiUrl::String, userId::String, robotId::String, sessionId::String)
     navabilityClient = NavAbilityHttpsClient(apiUrl)
-    return NavAbilityDFG{SolverParams}(navabilityClient,userId,robotId,sessionId)
+    return NavAbilityDFG(navabilityClient,SolverParams(),userId,robotId,sessionId)
 end
 
 function Base.show(io::IO, dfg::NavAbilityDFG)
