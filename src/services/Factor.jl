@@ -4,9 +4,6 @@ using DistributedFactorGraphs
 using RoME
 
 function gqlFactorToDfg(dfg, gqlFactor)
-  if haskey(gqlFactor,"label")
-    gqlFactor["timestamp"] = gqlFactor["timestamp"]["formatted"]
-  end
   return unpackFactor(dfg, gqlFactor)
 end
 

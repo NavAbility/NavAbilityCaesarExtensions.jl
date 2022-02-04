@@ -7,15 +7,8 @@ using Unmarshal
 
 # TODO: Reconcile these differences
 function gqlVariableToDfg(dfg, gqlVariable)
-  ppeDict = Dict()
-  solverDataDict = Dict()
   if haskey(gqlVariable,"label")
-    gqlVariable["timestamp"] = gqlVariable["timestamp"]["formatted"]
-    for ppe in gqlVariable["ppes"]
-        ppe["lastUpdatedTimestamp"] = ppe["lastUpdatedTimestamp"]["formatted"]
-    end
     ppes = map(ppe -> begin
-      ppe["lastUpdatedTimestamp"] = ppe["lastUpdatedTimestamp"]["formatted"]
       return unmarshal(MeanMaxPPE, ppe)
     end, gqlVariable["ppes"])
     solverData = map(sd -> begin
