@@ -30,7 +30,7 @@ end
 
 function getFactors(dfg::NavAbilityDFG, regexFilter::Union{Nothing, Regex}=nothing; tags::Vector{Symbol}=Symbol[], solvable::Int=0)
   context = Client(dfg.userId,dfg.robotId,dfg.sessionId)
-  gqlFactors = NavAbilitySDK.getFactors(dfg.navabilityClient, context, FULL)
+  gqlFactors = NavAbilitySDK.getFactors(dfg.navabilityClient, context; detail=FULL)
   dfgFactors = map(f -> gqlFactorToDfg(dfg, f),gqlFactors)
   # TODO: Implement regexFilter
   # TODO: Implement tags
