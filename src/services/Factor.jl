@@ -2,8 +2,14 @@ using .NavAbilityCaesarExtensions
 using NavAbilitySDK
 using DistributedFactorGraphs
 using RoME
+using JSON2
+using Base64
 
 function gqlFactorToDfg(dfg, gqlFactor)
+  base64JsonData = get(gqlFactor,"data",nothing)
+  if base64JsonData !== nothing
+    gqlFactor["data"] = JSON2.read(String(base64decode(base64JsonData)))
+  end
   return unpackFactor(dfg, gqlFactor)
 end
 
