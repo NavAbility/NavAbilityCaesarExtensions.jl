@@ -5,6 +5,8 @@ using RoME
 using JSON2
 using Base64
 
+import DistributedFactorGraphs: addFactor!
+
 function gqlFactorToDfg(dfg, gqlFactor)
   base64JsonData = get(gqlFactor,"data",nothing)
   if base64JsonData !== nothing
