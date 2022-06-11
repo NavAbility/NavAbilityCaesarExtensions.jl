@@ -39,14 +39,14 @@ end
 
 function getVariable(dfg::NavAbilityDFG, label::Union{Symbol, String})
   context = Client(dfg.userId,dfg.robotId,dfg.sessionId)
-  gqlVariable = NavAbilitySDK.getVariable(dfg.navabilityClient, context, string(label))
+  gqlVariable = NavAbilitySDK.getVariable(dfg.navabilityClient, context, string(label)) |> fetch
   dfgVariable = gqlVariableToDfg(dfg, gqlVariable)
   return dfgVariable
 end
 
 function getVariables(dfg::NavAbilityDFG, regexFilter::Union{Nothing, Regex}=nothing; tags::Vector{Symbol}=Symbol[], solvable::Int=0)
   context = Client(dfg.userId,dfg.robotId,dfg.sessionId)
-  gqlVariables = NavAbilitySDK.getVariables(dfg.navabilityClient, context)
+  gqlVariables = NavAbilitySDK.getVariables(dfg.navabilityClient, context) |> fetch
   dfgVariables = map(v -> gqlVariableToDfg(dfg, v),gqlVariables)
   # TODO: Implement regexFilter
   # TODO: Implement tags
