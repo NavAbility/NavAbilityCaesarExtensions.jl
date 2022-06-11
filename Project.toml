@@ -14,3 +14,7 @@ JSON2 = "2535ab7d-5cd8-5a07-80ac-9b1792aadce3"
 NavAbilitySDK = "f3e6a059-199c-4ada-8143-fcefb97e6165"
 RoME = "91fb55c2-4c03-5a59-ba21-f4ea956187b8"
 Unmarshal = "cbff2730-442d-58d7-89d1-8e530c41eb02"
+
+[compat]
+NavAbilitySDK = "0.4.6"
+julia = "1.6"
